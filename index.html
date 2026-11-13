@@ -6,57 +6,71 @@
 <title>Omnia Restaurant Pro</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#fff7ed}
+body{background:#fff7ed;color:#111}
+body.dark{background:#111827;color:white}
+body.dark .card,body.dark .info{background:#1f2937;color:white}
 header{background:#ea580c;color:white;padding:20px;text-align:center}
 header h1{font-size:32px}
-header p{margin-top:5px;opacity:.9}
-.info{background:white;padding:15px;text-align:center;border-bottom:2px solid #fed7aa}
+.topbar{display:flex;justify-content:center;gap:10px;padding:15px;flex-wrap:wrap}
+.topbar input{padding:10px 15px;border-radius:20px;border:1px solid #ddd;width:250px}
+.topbar button{padding:10px 15px;border:none;border-radius:20px;background:#111827;color:white;cursor:pointer;font-weight:bold}
+.info{background:white;padding:15px;text-align:center}
 .info b{color:#ea580c}
-.filters{text-align:center;padding:15px}
+.filters{text-align:center;padding:10px}
 .filters button{padding:10px 18px;margin:5px;border:none;border-radius:20px;background:white;cursor:pointer;font-weight:bold;box-shadow:0 2px 5px #ddd}
 .filters button.active{background:#ea580c;color:white}
-.menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:15px;padding:15px}
+.menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:15px;padding:15px}
 .card{background:white;border-radius:15px;overflow:hidden;box-shadow:0 3px 10px #ddd}
 .card img{width:100%;height:180px;object-fit:cover}
 .card-body{padding:15px}
-.card-body h3{margin-bottom:5px}
 .price{color:#ea580c;font-weight:bold;font-size:18px;margin:8px 0}
-.card-body button{width:100%;padding:10px;background:#ea580c;color:white;border:none;border-radius:10px;cursor:pointer;font-weight:bold}
-.cart{position:fixed;bottom:15px;right:15px;left:15px;background:#111827;color:white;padding:15px;border-radius:15px;display:flex;justify-content:space-between;align-items:center}
+.card-body button{width:100%;padding:10px;background:#ea580c;color:white;border:none;border-radius:10px;cursor:pointer;font-weight:bold;margin-top:5px}
+.fav{background:#f3f4f6 !important;color:#111 !important}
+.cart{position:fixed;bottom:15px;right:15px;left:15px;background:#111827;color:white;padding:15px;border-radius:15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .cart button{background:#22c55e;color:white;border:none;padding:10px 15px;border-radius:10px;font-weight:bold;cursor:pointer}
-footer{background:#111827;color:white;text-align:center;padding:20px;margin-top:20px}
-footer p{margin:4px 0;font-size:14px;opacity:.9}
+.track{background:#fef3c7;padding:15px;text-align:center;margin:15px;border-radius:15px;color:#111}
+footer{background:#111827;color:white;text-align:center;padding:20px}
 </style>
 </head>
 <body>
 
 <header>
-<h1>🍔 Omnia Restaurant Pro</h1>
-<p>Delicious Food - Fast Delivery - Demo Project</p>
+<h1>🍔 Omnia Restaurant PRO</h1>
+<p>Pro Version - Search - Dark Mode - Tracking - Demo Project</p>
 </header>
+
+<div class="topbar">
+<input id="search" placeholder="Search burger, pizza..." oninput="render()">
+<button onclick="toggleDark()">🌙 Dark Mode</button>
+<button onclick="showFav()">❤️ My Favorites</button>
+</div>
 
 <div class="info">
 <b>📍 Address:</b> 123 Demo Street, Mansoura, Dakahlia, Egypt - Demo Only<br>
-<b>📞 Phone:</b> 01000000000<br>
-<b>⏰ Open:</b> 11 AM - 11 PM Daily
+<b>📞 Phone:</b> 01000000000 - Demo Number<br>
+<b>⏰ Open:</b> 11 AM - 11 PM
 </div>
 
 <div class="filters">
 <button class="active" onclick="filterItems('all',this)">All</button>
-<button onclick="filterItems('burger',this)">Burgers</button>
-<button onclick="filterItems('pizza',this)">Pizza</button>
-<button onclick="filterItems('drinks',this)">Drinks</button>
+<button onclick="filterItems('burger',this)">🍔 Burgers</button>
+<button onclick="filterItems('pizza',this)">🍕 Pizza</button>
+<button onclick="filterItems('drinks',this)">🥤 Drinks</button>
+<button onclick="filterItems('dessert',this)">🍰 Dessert</button>
 </div>
+
+<div class="track" id="track">📦 Order Status: No order yet - Choose items to start</div>
 
 <div class="menu" id="menu"></div>
 
 <div class="cart">
-<span>🛒 Cart: <b id="count">0</b> items - <b id="total">0</b> EGP</span>
+<span>🛒 Cart: <b id="count">0</b> - <b id="total">0</b> EGP</span>
 <button onclick="orderWhatsApp()">Order on WhatsApp</button>
+<button onclick="trackOrder()" style="background:#ea580c">Track Order</button>
 </div>
 
 <footer>
-<p>Omnia Restaurant Pro - Demo Project by Omnia Ibrahim</p>
+<p>Omnia Restaurant Pro - Demo by Omnia Ibrahim</p>
 <p>📍 123 Demo Street, Mansoura, Egypt - Demo Address Only</p>
 <p>📞 01000000000 - Demo Number Only</p>
 <p>This is a demo website, not a real restaurant.</p>
@@ -64,43 +78,32 @@ footer p{margin:4px 0;font-size:14px;opacity:.9}
 
 <script>
 const items=[
-{name:"Classic Burger",price:120,cat:"burger",img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"},
-{name:"Cheese Burger",price:150,cat:"burger",img:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=600"},
-{name:"Margherita Pizza",price:180,cat:"pizza",img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600"},
-{name:"Pepperoni Pizza",price:220,cat:"pizza",img:"https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600"},
-{name:"Fresh Juice",price:60,cat:"drinks",img:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600"},
-{name:"Milkshake",price:80,cat:"drinks",img:"https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600"},
+{name:"Classic Burger",price:120,cat:"burger",rate:"⭐ 4.8",img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"},
+{name:"Double Cheese Burger",price:180,cat:"burger",rate:"⭐ 4.9",img:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=600"},
+{name:"Margherita Pizza",price:180,cat:"pizza",rate:"⭐ 4.7",img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600"},
+{name:"Pepperoni Pizza",price:220,cat:"pizza",rate:"⭐ 4.9",img:"https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600"},
+{name:"Fresh Juice",price:60,cat:"drinks",rate:"⭐ 4.6",img:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600"},
+{name:"Chocolate Cake",price:90,cat:"dessert",rate:"⭐ 5.0",img:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600"},
 ];
-let cart=[];
-let current='all';
+let cart=[]; let current='all'; let favs=[]; let showFavOnly=false;
 function render(){
-let box=document.getElementById('menu');
-box.innerHTML='';
-items.filter(i=>current==='all'||i.cat===current).forEach((item,idx)=>{
-box.innerHTML+=`<div class="card"><img src="${item.img}"><div class="card-body"><h3>${item.name}</h3><p>Delicious ${item.name} made fresh</p><div class="price">${item.price} EGP</div><button onclick="addToCart('${item.name}',${item.price})">Add to Cart</button></div></div>`;
+let q=document.getElementById('search').value.toLowerCase();
+let box=document.getElementById('menu'); box.innerHTML='';
+let list=items.filter(i=>(current==='all'||i.cat===current) && i.name.toLowerCase().includes(q));
+if(showFavOnly) list=list.filter(i=>favs.includes(i.name));
+if(list.length===0) box.innerHTML='<p style="text-align:center">No items found</p>';
+list.forEach(item=>{
+let isFav=favs.includes(item.name)?'❤️ Remove from Fav':'🤍 Add to Fav';
+box.innerHTML+=`<div class="card"><img src="${item.img}"><div class="card-body"><h3>${item.name}</h3><p>${item.rate} - Fresh & Delicious</p><div class="price">${item.price} EGP</div><button onclick="addToCart('${item.name}',${item.price})">Add to Cart</button><button class="fav" onclick="toggleFav('${item.name}')">${isFav}</button></div></div>`;
 });
 }
-function addToCart(name,price){
-cart.push({name,price});
-document.getElementById('count').innerText=cart.length;
-let t=cart.reduce((s,i)=>s+i.price,0);
-document.getElementById('total').innerText=t;
-alert(name+" added to cart");
-}
-function filterItems(c,btn){
-current=c;
-document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
-btn.classList.add('active');
-render();
-}
-function orderWhatsApp(){
-if(cart.length===0){alert("Cart is empty");return;}
-let msg="Hello Omnia Restaurant Pro! I want to order:%0A";
-cart.forEach(i=>{msg+=`- ${i.name} - ${i.price} EGP%0A`;});
-let t=cart.reduce((s,i)=>s+i.price,0);
-msg+=`Total: ${t} EGP`;
-window.open("https://wa.me/201000000000?text="+msg,"_blank");
-}
+function addToCart(n,p){cart.push({name:n,price:p});document.getElementById('count').innerText=cart.length;document.getElementById('total').innerText=cart.reduce((s,i)=>s+i.price,0);alert(n+" added");}
+function filterItems(c,b){current=c;showFavOnly=false;document.querySelectorAll('.filters button').forEach(x=>x.classList.remove('active'));b.classList.add('active');render();}
+function toggleDark(){document.body.classList.toggle('dark');}
+function toggleFav(n){favs.includes(n)?favs=favs.filter(x=>x!==n):favs.push(n);render();}
+function showFav(){showFavOnly=true;render();alert("Showing your favorites");}
+function trackOrder(){if(cart.length===0){document.getElementById('track').innerText="📦 No order yet";return;}document.getElementById('track').innerText="📦 Your order is being prepared... Estimated 30 mins - Demo Tracking";}
+function orderWhatsApp(){if(cart.length===0){alert("Cart empty");return;}let msg="Hello Omnia Restaurant PRO! I want to order:%0A";cart.forEach(i=>msg+=`- ${i.name} - ${i.price} EGP%0A`);msg+=`Total: ${cart.reduce((s,i)=>s+i.price,0)} EGP`;window.open("https://wa.me/201000000000?text="+msg,"_blank");}
 render();
 </script>
 </body>
