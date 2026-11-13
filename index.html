@@ -1,170 +1,107 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مطعم أمنية برو | Omnia Pro</title>
+<title>Omnia Restaurant Pro</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-body{background:#fff8f0;padding-bottom:300px}
-header{background:#ff5722;color:white;padding:25px;text-align:center}
-header h1{font-size:34px}
-.info{background:white;margin:20px;padding:20px;border-radius:15px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,.1)}
-.info p{margin:6px 0}
-.search-box{padding:0 20px;text-align:center}
-.search-box input{width:90%;max-width:500px;padding:13px;border-radius:25px;border:1px solid #ddd;font-size:16px;text-align:center}
-.cats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:15px}
-.cats button{background:white;color:#ff5722;border:2px solid #ff5722}
-.cats button.active{background:#ff5722;color:white}
-.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;padding:20px}
-.card{background:white;border-radius:15px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,.1);text-align:center;padding-bottom:15px}
-.card img{width:100%;height:170px;object-fit:cover}
-.card h3{margin:10px 0 5px}
-.card p{color:#777;font-size:14px;padding:0 10px}
-.price{color:#ff5722;font-weight:bold;font-size:18px;margin:8px}
-button{background:#ff5722;color:white;border:none;padding:10px 18px;border-radius:20px;cursor:pointer;font-size:15px;margin:2px}
-.form-box,.admin,.about{background:white;padding:20px;border-radius:15px;margin:20px;text-align:center;box-shadow:0 0 15px rgba(0,0,0,.1)}
-.form-box input,.form-box select,.admin input,.admin select{padding:12px;margin:6px 0;width:95%;max-width:500px;border-radius:10px;border:1px solid #ddd;font-size:15px}
-#cart{position:fixed;bottom:15px;left:15px;right:15px;background:white;padding:15px;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,.25);text-align:center;max-height:280px;overflow-y:auto}
-.cart-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #eee}
-.qty button{padding:4px 10px;border-radius:50%}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#fff7ed}
+header{background:#ea580c;color:white;padding:20px;text-align:center}
+header h1{font-size:32px}
+header p{margin-top:5px;opacity:.9}
+.info{background:white;padding:15px;text-align:center;border-bottom:2px solid #fed7aa}
+.info b{color:#ea580c}
+.filters{text-align:center;padding:15px}
+.filters button{padding:10px 18px;margin:5px;border:none;border-radius:20px;background:white;cursor:pointer;font-weight:bold;box-shadow:0 2px 5px #ddd}
+.filters button.active{background:#ea580c;color:white}
+.menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:15px;padding:15px}
+.card{background:white;border-radius:15px;overflow:hidden;box-shadow:0 3px 10px #ddd}
+.card img{width:100%;height:180px;object-fit:cover}
+.card-body{padding:15px}
+.card-body h3{margin-bottom:5px}
+.price{color:#ea580c;font-weight:bold;font-size:18px;margin:8px 0}
+.card-body button{width:100%;padding:10px;background:#ea580c;color:white;border:none;border-radius:10px;cursor:pointer;font-weight:bold}
+.cart{position:fixed;bottom:15px;right:15px;left:15px;background:#111827;color:white;padding:15px;border-radius:15px;display:flex;justify-content:space-between;align-items:center}
+.cart button{background:#22c55e;color:white;border:none;padding:10px 15px;border-radius:10px;font-weight:bold;cursor:pointer}
+footer{background:#111827;color:white;text-align:center;padding:20px;margin-top:20px}
+footer p{margin:4px 0;font-size:14px;opacity:.9}
 </style>
 </head>
 <body>
 
 <header>
-<h1>🍕 مطعم أمنية برو</h1>
-<p>سيستم مطعم كامل - أجا | الدقهلية</p>
+<h1>🍔 Omnia Restaurant Pro</h1>
+<p>Delicious Food - Fast Delivery - Demo Project</p>
 </header>
 
 <div class="info">
-<h3>📍 مطعم أمنية - أجا</h3>
-<p>📌 العنوان: أجا - الدقهلية - شارع البحر الرئيسي - بجوار الموقف</p>
-<p>📞 للطلبات: 01012345678</p>
-<p>⏰ من 11 الصبح لـ 12 بالليل | 🛵 توصيل في 30 دقيقة</p>
+<b>📍 Address:</b> 123 Demo Street, Mansoura, Dakahlia, Egypt - Demo Only<br>
+<b>📞 Phone:</b> 01000000000<br>
+<b>⏰ Open:</b> 11 AM - 11 PM Daily
 </div>
 
-<div class="search-box">
-<input id="search" oninput="render()" placeholder="🔍 دور على أكلة... اكتب برجر، بيتزا...">
-</div>
-
-<div class="cats">
-<button class="active" onclick="setCat('الكل',this)">الكل</button>
-<button onclick="setCat('برجر',this)">🍔 برجر</button>
-<button onclick="setCat('بيتزا',this)">🍕 بيتزا</button>
-<button onclick="setCat('مشويات',this)">🍗 مشويات</button>
-<button onclick="setCat('سلطات',this)">🥗 سلطات</button>
+<div class="filters">
+<button class="active" onclick="filterItems('all',this)">All</button>
+<button onclick="filterItems('burger',this)">Burgers</button>
+<button onclick="filterItems('pizza',this)">Pizza</button>
+<button onclick="filterItems('drinks',this)">Drinks</button>
 </div>
 
 <div class="menu" id="menu"></div>
 
-<div class="about">
-<h3>👩‍💻 عن المطورة</h3>
-<p><b>أمنية إبراهيم</b> - من أجا، الدقهلية</p>
-<p>مطورة واجهات أمامية | Front-End Developer</p>
-<p>HTML - CSS - JavaScript - GitHub Pages</p>
-<p>المشروع ده: سيستم مطعم كامل بسلة، بحث، فلترة، ولوحة تحكم</p>
-<a href="https://github.com/omniaibrahimfarouk2002-hub" target="_blank"><button>شوف شغلي على GitHub</button></a>
+<div class="cart">
+<span>🛒 Cart: <b id="count">0</b> items - <b id="total">0</b> EGP</span>
+<button onclick="orderWhatsApp()">Order on WhatsApp</button>
 </div>
 
-<div class="admin">
-<h3>🔐 لوحة تحكم المدير - أضيفي وجبة جديدة</h3>
-<input id="newName" placeholder="اسم الوجبة - مثال: برجر دبل">
-<input id="newPrice" type="number" placeholder="السعر - مثال: 160">
-<input id="newImg" placeholder="لينك صورة الوجبة">
-<select id="newCat"><option>برجر</option><option>بيتزا</option><option>مشويات</option><option>سلطات</option></select><br>
-<button onclick="addMeal()">إضافة الوجبة ➕</button>
-</div>
-
-<div class="form-box">
-<h3>📝 بيانات التوصيل</h3>
-<input id="name" placeholder="اسمك ايه؟"><br>
-<input id="phone" placeholder="رقم موبايلك"><br>
-<input id="address" placeholder="عنوانك فين؟"><br>
-<select id="pay"><option>الدفع عند الاستلام - كاش</option><option>فودافون كاش</option><option>فيزا</option></select>
-</div>
-
-<div id="cart">
-<h3>🛒 طلبك</h3>
-<div id="items">لسه مطلبتيش حاجة</div>
-<p style="margin:10px 0"><b>المجموع: <span id="total">0</span> جنيه</b></p>
-<button onclick="orderWhats()">اطلب على واتساب 📱</button>
-<button onclick="order()" style="background:#4CAF50">تأكيد الطلب ✅</button>
-</div>
+<footer>
+<p>Omnia Restaurant Pro - Demo Project by Omnia Ibrahim</p>
+<p>📍 123 Demo Street, Mansoura, Egypt - Demo Address Only</p>
+<p>📞 01000000000 - Demo Number Only</p>
+<p>This is a demo website, not a real restaurant.</p>
+</footer>
 
 <script>
-let defaultMeals=[
-{id:1,name:'برجر لحم',cat:'برجر',price:120,desc:'برجر لحم بلدي مع جبنة وصوص خاص',img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500'},
-{id:2,name:'برجر دبل',cat:'برجر',price:180,desc:'قطعتين لحم مع جبنة دبل',img:'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=500'},
-{id:3,name:'بيتزا مارجريتا',cat:'بيتزا',price:150,desc:'موتزاريلا وطماطم وريحان',img:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500'},
-{id:4,name:'بيتزا خضار',cat:'بيتزا',price:130,desc:'خضار طازة مع جبنة',img:'https://images.unsplash.com/photo-1511689660979-10d2b1aada49?w=500'},
-{id:5,name:'فراخ مشوية',cat:'مشويات',price:180,desc:'نص فرخة على الفحم مع رز',img:'https://images.unsplash.com/photo-1562967914-608f82629710?w=500'},
-{id:6,name:'كباب',cat:'مشويات',price:220,desc:'كباب بلدي على الفحم',img:'https://images.unsplash.com/photo-1544025162-d76694265947?w=500'},
-{id:7,name:'سلطة سيزر',cat:'سلطات',price:90,desc:'سلطة طازة مع صوص السيزر',img:'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500'},
+const items=[
+{name:"Classic Burger",price:120,cat:"burger",img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"},
+{name:"Cheese Burger",price:150,cat:"burger",img:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=600"},
+{name:"Margherita Pizza",price:180,cat:"pizza",img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600"},
+{name:"Pepperoni Pizza",price:220,cat:"pizza",img:"https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600"},
+{name:"Fresh Juice",price:60,cat:"drinks",img:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600"},
+{name:"Milkshake",price:80,cat:"drinks",img:"https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600"},
 ];
-let meals = JSON.parse(localStorage.getItem('omniaMeals')) || defaultMeals;
-let cart = {};
-let currentCat='الكل';
-function save(){ localStorage.setItem('omniaMeals', JSON.stringify(meals)); }
-function setCat(c,btn){ currentCat=c; document.querySelectorAll('.cats button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); render(); }
+let cart=[];
+let current='all';
 function render(){
-let q=document.getElementById('search').value.toLowerCase();
-let filtered=meals.filter(m=>(currentCat=='الكل'||m.cat==currentCat) && m.name.includes(q));
-document.getElementById('menu').innerHTML=filtered.map(m=>`
-<div class="card">
-<img src="${m.img}">
-<h3>${m.name}</h3><p>${m.desc}</p>
-<div class="price">${m.price} جنيه - ${m.cat}</div>
-<button onclick="addToCart(${m.id})">اطلب دلوقتي</button>
-<button onclick="deleteMeal(${m.id})" style="background:#999">حذف</button>
-</div>`).join('') || '<p style="text-align:center;width:100%">مفيش نتيجة 😢</p>';
+let box=document.getElementById('menu');
+box.innerHTML='';
+items.filter(i=>current==='all'||i.cat===current).forEach((item,idx)=>{
+box.innerHTML+=`<div class="card"><img src="${item.img}"><div class="card-body"><h3>${item.name}</h3><p>Delicious ${item.name} made fresh</p><div class="price">${item.price} EGP</div><button onclick="addToCart('${item.name}',${item.price})">Add to Cart</button></div></div>`;
+});
 }
-function addToCart(id){ cart[id]=(cart[id]||0)+1; renderCart(); }
-function changeQty(id,delta){ cart[id]+=delta; if(cart[id]<=0) delete cart[id]; renderCart(); }
-function renderCart(){
-let html=''; let total=0;
-for(let id in cart){
-let m=meals.find(x=>x.id==id); if(!m) continue;
-let sub=m.price*cart[id]; total+=sub;
-html+=`<div class="cart-item"><span>${m.name} - ${m.price} ج</span><span class="qty"><button onclick="changeQty(${id},-1)">-</button> ${cart[id]} <button onclick="changeQty(${id},1)">+</button> = ${sub} ج <button onclick="changeQty(${id},-${cart[id]})" style="background:#999">x</button></span></div>`;
+function addToCart(name,price){
+cart.push({name,price});
+document.getElementById('count').innerText=cart.length;
+let t=cart.reduce((s,i)=>s+i.price,0);
+document.getElementById('total').innerText=t;
+alert(name+" added to cart");
 }
-document.getElementById('items').innerHTML=html||'لسه مطلبتيش حاجة';
-document.getElementById('total').innerText=total;
+function filterItems(c,btn){
+current=c;
+document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+render();
 }
-function addMeal(){
-let n=document.getElementById('newName').value;
-let p=Number(document.getElementById('newPrice').value);
-let img=document.getElementById('newImg').value || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500';
-let c=document.getElementById('newCat').value;
-if(!n||!p){alert('اكتبي الاسم والسعر');return;}
-meals.push({id:Date.now(),name:n,cat:c,price:p,desc:'وجبة جديدة من مطعم أمنية',img:img});
-save(); render(); alert('اتضافت يا أمنية ✅');
+function orderWhatsApp(){
+if(cart.length===0){alert("Cart is empty");return;}
+let msg="Hello Omnia Restaurant Pro! I want to order:%0A";
+cart.forEach(i=>{msg+=`- ${i.name} - ${i.price} EGP%0A`;});
+let t=cart.reduce((s,i)=>s+i.price,0);
+msg+=`Total: ${t} EGP`;
+window.open("https://wa.me/201000000000?text="+msg,"_blank");
 }
-function deleteMeal(id){ if(confirm('تمسحي الوجبة دي؟')){ meals=meals.filter(m=>m.id!=id); delete cart[id]; save(); render(); renderCart(); } }
-function getOrderText(){
-let n=document.getElementById('name').value;
-let p=document.getElementById('phone').value;
-let a=document.getElementById('address').value;
-let pay=document.getElementById('pay').value;
-let total=document.getElementById('total').innerText;
-let items=Object.keys(cart).map(id=>{let m=meals.find(x=>x.id==id); return m.name+' x'+cart[id]}).join(', ');
-return {n,p,a,pay,total,items};
-}
-function order(){
-let o=getOrderText();
-if(!o.items){alert('اختاري أكلة الأول 😍');return;}
-if(!o.n||!o.p||!o.a){alert('اكتبي اسمك ورقمك وعنوانك');return;}
-alert('شكراً يا '+o.n+' ❤️\nطلبك: '+o.items+'\nالمجموع: '+o.total+' جنيه\nهنوصله على: '+o.a+'\nالدفع: '+o.pay);
-cart={}; renderCart();
-}
-function orderWhats(){
-let o=getOrderText();
-if(!o.items){alert('اختاري أكلة الأول');return;}
-if(!o.n||!o.p||!o.a){alert('اكتبي بياناتك الأول');return;}
-let msg=`طلب جديد من مطعم أمنية%0Aالاسم: ${o.n}%0Aالرقم: ${o.p}%0Aالعنوان: ${o.a}%0Aالطلب: ${o.items}%0Aالمجموع: ${o.total} جنيه%0Aالدفع: ${o.pay}`;
-window.open(`https://wa.me/201012345678?text=${msg}`,'_blank');
-}
-render(); renderCart();
+render();
 </script>
 </body>
 </html>
